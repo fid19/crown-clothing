@@ -1,7 +1,14 @@
+$medium: 900px;
+
 .sign-in-page-container {
   display: flex;
-  justify-content: space-between;
-  width: 900px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  // width: 900px;
   margin: 30px auto;
   padding: 0px 30px;
+
+  @media screen and (max-width: $medium) {
+    justify-content: center;
+  }
 }

@@ -28,7 +28,6 @@ const SignInForm = () => {
   useEffect(() => {
     async function check() {
       const response = await getRedirectResult(auth);
-      console.log(response);
       if (response) {
         const userDocRef = createUserDocumentFromAuth(response.user);
       }
@@ -42,9 +41,7 @@ const SignInForm = () => {
   };
 
   const logGoogleUser = async () => {
-    const { user } = await signInWithGoogleRedirect();
-    // console.log(user);
-    await createUserDocumentFromAuth(user);
+    await signInWithGoogleRedirect();
   };
 
   const onSubmitForm = async (event) => {
@@ -56,8 +53,7 @@ const SignInForm = () => {
     }
 
     try {
-      const user = await signInWithNativeEmailAndPassword(email, password);
-      console.log(user);
+      await signInWithNativeEmailAndPassword(email, password);
 
       resetFormFields();
     } catch (err) {

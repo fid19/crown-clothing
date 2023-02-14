@@ -1,0 +1,17 @@
+$medium: 1000px;
+$small: 795px;
+
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 10px;
+  row-gap: 50px;
+
+  @media screen and (max-width: $medium) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (max-width: $small) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

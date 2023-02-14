@@ -52,6 +52,8 @@ const SignUpForm = () => {
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
         alert("Email already exists");
+      } else if (err.code === "auth/weak-password") {
+        alert("Password should be atleast 6 characters long");
       } else {
         console.log(err);
       }

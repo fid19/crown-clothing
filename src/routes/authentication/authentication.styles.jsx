@@ -1,6 +1,8 @@
-$medium: 900px;
+import styled from "styled-components";
 
-.sign-in-page-container {
+let medium = 900;
+
+export const SignInPageContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -8,7 +10,7 @@ $medium: 900px;
   margin: 30px auto;
   padding: 0px 30px;
 
-  @media screen and (max-width: $medium) {
+  @media screen and (max-width: ${medium}px) {
     justify-content: center;
   }
-}
+`;

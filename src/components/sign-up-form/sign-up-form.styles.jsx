@@ -5,7 +5,7 @@ const medium = 819.5;
 export const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 380px;
+  min-width: 380px;
   padding: 0 10px;
 
   h2 {

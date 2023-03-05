@@ -1,4 +1,6 @@
-import { useState, createContext, useEffect } from "react";
+import { createContext, useReducer } from "react";
+
+import { createAction } from "../utils/reducer/reducer.utils";
 
 export const ShoppingContext = createContext({
   shoppingBag: false,
@@ -9,6 +11,56 @@ export const ShoppingContext = createContext({
   removeEntireCart: () => {},
   totalPrice: 0,
 });
+
+const INITIAL_STATE = {
+  shoppingBag: false,
+  cartItems: [],
+  cartCount: 0,
+  totalPrice: 0,
+};
+
+export const USER_ACTION_TYPES = {
+  SET_SHOPPING_BAG: "SET_SHOPPING_BAG",
+  SET_ITEMS: "SET_ITEMS",
+};
+
+const shopReducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case USER_ACTION_TYPES.SET_ITEMS:
+      return {
+        ...state,
+        ...payload,
+      };
+    // case USER_ACTION_TYPES.SET_CART_COUNT:
+    //   return {
+    //     ...state,
+    //     cartCount: payload,
+    //   };
+
+    // case USER_ACTION_TYPES.SET_TOTAL_PRICE:
+    //   return {
+    //     ...state,
+    //     totalPrice: payload,
+    //   };
+
+    // case USER_ACTION_TYPES.SET_CART_ITEMS:
+    //   return {
+    //     ...state,
+    //     cartItems: payload,
+    //   };
+
+    case USER_ACTION_TYPES.SET_SHOPPING_BAG:
+      return {
+        ...state,
+        shoppingBag: payload,
+      };
+
+    default:
+      throw new Error(`Unhandled type ${type} in shopReducer`);
+  }
+};
 
 const removeEntireCartItem = (cartItems, productId) => {
   const cart = cartItems.filter((cart) => {
@@ -51,29 +103,58 @@ const addCartItem = (cartItems, productToAdd) => {
 };
 
 export const ShoppingProvider = ({ children }) => {
-  const [shoppingBag, setShoppingBag] = useState(false);
+  // const [shoppingBag, setShoppingBag] = useState(false);
 
-  const [cartItems, setCartItems] = useState([]);
+  // const [cartItems, setCartItems] = useState([]);
 
-  const [cartCount, setCartCount] = useState(0);
+  // const [cartCount, setCartCount] = useState(0);
 
-  const [totalPrice, setTotalPrice] = useState(0);
+  // const [totalPrice, setTotalPrice] = useState(0);
 
-  useEffect(() => {
-    const newCartCount = cartItems.reduce((prevVal, { quantity }) => {
+  const [{ shoppingBag, cartItems, cartCount, totalPrice }, dispatch] =
+    useReducer(shopReducer, INITIAL_STATE);
+
+  // const setCartCount = (count) => {
+  //   dispatch({ type: USER_ACTION_TYPES.SET_CART_COUNT, payload: count });
+  // };
+
+  // const setTotalPrice = (price) => {
+  //   dispatch({ type: USER_ACTION_TYPES.SET_TOTAL_PRICE, payload: price });
+  // };
+
+  const setCartItems = (items) => {
+    const newCartCount = items.reduce((prevVal, { quantity }) => {
       return prevVal + quantity;
     }, 0);
 
-    setCartCount(newCartCount);
-  }, [cartItems]);
-
-  useEffect(() => {
-    const newCartTotal = cartItems.reduce((prevVal, { price, quantity }) => {
+    const newCartTotal = items.reduce((prevVal, { price, quantity }) => {
       return price * quantity + prevVal;
     }, 0);
 
-    setTotalPrice(newCartTotal);
-  }, [cartItems]);
+    dispatch(
+      createAction(USER_ACTION_TYPES.SET_ITEMS, {
+        cartItems: items,
+        cartCount: newCartCount,
+        totalPrice: newCartTotal,
+      })
+    );
+  };
+
+  // useEffect(() => {
+  //   const newCartCount = cartItems.reduce((prevVal, { quantity }) => {
+  //     return prevVal + quantity;
+  //   }, 0);
+
+  //   setCartCount(newCartCount);
+  // }, [cartItems]);
+
+  // useEffect(() => {
+  //   const newCartTotal = cartItems.reduce((prevVal, { price, quantity }) => {
+  //     return price * quantity + prevVal;
+  //   }, 0);
+
+  //   setTotalPrice(newCartTotal);
+  // }, [cartItems]);
 
   const addItemToCart = (productToAdd) => {
     setCartItems(addCartItem(cartItems, productToAdd));
@@ -85,6 +166,10 @@ export const ShoppingProvider = ({ children }) => {
 
   const removeEntireCart = (productId) => {
     setCartItems(removeEntireCartItem(cartItems, productId));
+  };
+
+  const setShoppingBag = (shoppingBag) => {
+    dispatch(createAction(USER_ACTION_TYPES.SET_SHOPPING_BAG, shoppingBag));
   };
 
   const value = {

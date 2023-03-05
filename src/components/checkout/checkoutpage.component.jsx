@@ -1,6 +1,5 @@
 import { useEffect, useContext } from "react";
-import { ShoppingContext } from "../../contexts/shopping-bag.context";
-import { CartItem } from "../cart-item/cart-item.component";
+// import { ShoppingContext } from "../../contexts/shopping-bag.context";
 import { CheckoutItem } from "../checkout-item/checkout-item.component";
 import {
   CheckoutContainer,
@@ -8,12 +7,22 @@ import {
   HeaderBlock,
   Total,
 } from "./checkoutpage.styles";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCartItems,
+  selectCartTotal,
+} from "../../store/cart/cart.selector";
+import { setIsCartOpen } from "../../store/cart/cart.action";
 
 export const CheckoutPage = () => {
-  const { cartItems, setShoppingBag, totalPrice } = useContext(ShoppingContext);
+  // const { cartItems, setShoppingBag, totalPrice } = useContext(ShoppingContext);
+
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setShoppingBag(false);
+    dispatch(setIsCartOpen(false));
   }, []);
 
   return (
@@ -39,7 +48,7 @@ export const CheckoutPage = () => {
       {cartItems.map((cart) => (
         <CheckoutItem key={cart.id} cartItem={cart} />
       ))}
-      <Total>Total: ${totalPrice}</Total>
+      <Total>Total: ${cartTotal}</Total>
     </CheckoutContainer>
   );
 };

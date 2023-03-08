@@ -7,19 +7,28 @@ import { BrowserRouter } from "react-router-dom";
 // import { CategoriesProvider } from "./contexts/categories.context";
 // import { ShoppingProvider } from "./contexts/shopping-bag.context";
 import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { store, persistor } from "./store/store";
+
+import { PersistGate } from "redux-persist/integration/react";
+import { SplashScreen } from "./components/splashscreen/splashscreen.component";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        {/* <CategoriesProvider> */}
-        {/* <ShoppingProvider> */}
-        <App />
-        {/* </ShoppingProvider> */}
-        {/* </CategoriesProvider> */}
-      </BrowserRouter>
+      <PersistGate
+        loading={<SplashScreen />}
+        // onBeforeLift={() => new Promise((resolve) => setTimeout(resolve, 200))}
+        persistor={persistor}
+      >
+        <BrowserRouter>
+          {/* <CategoriesProvider> */}
+          {/* <ShoppingProvider> */}
+          <App />
+          {/* </ShoppingProvider> */}
+          {/* </CategoriesProvider> */}
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

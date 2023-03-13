@@ -1,4 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import {
+  selectCurrentUser,
+  selectUserError,
+} from "../../store/user/user.selector";
+
 import {
   createAuthUserWIthEmailAndPassword,
   createUserDocumentFromAuth,
@@ -6,6 +12,11 @@ import {
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 import { SignUpContainer } from "./sign-up-form.styles.jsx";
+import { useDispatch } from "react-redux";
+import {
+  emailSignInStart,
+  emailSignUpStart,
+} from "../../store/user/user.action";
 
 const defaultFormFields = {
   displayName: "",
@@ -14,10 +25,16 @@ const defaultFormFields = {
   confirmPassword: "",
 };
 
+export const alertError = async (err) => {
+  alert(err);
+};
+
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
 
   const { displayName, email, password, confirmPassword } = formFields;
+
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,26 +55,31 @@ const SignUpForm = () => {
       return;
     }
 
-    try {
-      const { user } = await createAuthUserWIthEmailAndPassword(
-        email,
-        password
-      );
+    dispatch(emailSignUpStart(email, password, displayName));
 
-      const response = await createUserDocumentFromAuth(user, {
-        displayName: displayName,
-      });
+    // dispatch(emailSignInStart(email, password));
 
-      resetFormFields();
-    } catch (err) {
-      if (err.code === "auth/email-already-in-use") {
-        alert("Email already exists");
-      } else if (err.code === "auth/weak-password") {
-        alert("Password should be atleast 6 characters long");
-      } else {
-        console.log(err);
-      }
-    }
+    // try {
+
+    //   const { user } = await createAuthUserWIthEmailAndPassword(
+    //     email,
+    //     password
+    //   );
+
+    //   const response = await createUserDocumentFromAuth(user, {
+    //     displayName: displayName,
+    //   });
+
+    //   resetFormFields();
+    // } catch (err) {
+    //   if (err.code === "auth/email-already-in-use") {
+    //     alert("Email already exists");
+    //   } else if (err.code === "auth/weak-password") {
+    //     alert("Password should be atleast 6 characters long");
+    //   } else {
+    //     console.log(err);
+    //   }
+    // }
   };
 
   return (

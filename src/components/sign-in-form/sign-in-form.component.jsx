@@ -10,6 +10,12 @@ import {
 } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import { ButtonContainer, SignInContainer } from "./sign-in-form.styles";
+import { USER_ACTION_TYPES } from "../../store/user/user.types";
+import { useDispatch } from "react-redux";
+import {
+  emailSignInStart,
+  googleSignInStart,
+} from "../../store/user/user.action";
 
 const defaultSignInForm = {
   email: "",
@@ -21,19 +27,21 @@ const SignInForm = () => {
 
   const { email, password } = signInForm;
 
+  const dispatch = useDispatch();
+
   const resetFormFields = () => {
     setSignInForm(defaultSignInForm);
   };
 
-  useEffect(() => {
-    async function check() {
-      const response = await getRedirectResult(auth);
-      if (response) {
-        const userDocRef = createUserDocumentFromAuth(response.user);
-      }
-    }
-    check();
-  }, []);
+  // useEffect(() => {
+  //   async function check() {
+  //     const response = await getRedirectResult(auth);
+  //     if (response) {
+  //       const userDocRef = createUserDocumentFromAuth(response.user);
+  //     }
+  //   }
+  //   check();
+  // }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -41,7 +49,8 @@ const SignInForm = () => {
   };
 
   const logGoogleUser = async () => {
-    await signInWithGoogleRedirect();
+    // await signInWithGoogleRedirect();
+    dispatch(googleSignInStart());
   };
 
   const onSubmitForm = async (event) => {
@@ -53,7 +62,9 @@ const SignInForm = () => {
     }
 
     try {
-      await signInWithNativeEmailAndPassword(email, password);
+      // await signInWithNativeEmailAndPassword(email, password);
+
+      dispatch(emailSignInStart(email, password));
 
       resetFormFields();
     } catch (err) {

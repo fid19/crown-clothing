@@ -1,12 +1,30 @@
 import styled from "styled-components";
 
-export const Splash = styled.div``;
+export const SpinnerOverlay = styled.div`
+  height: 60vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-export const SplashImage = styled.img`
-  position: absolute;
-  top: 50%;
-  left: 50%;
+export const SpinnerContainer = styled.div`
+  display: inline-block;
   width: 50px;
-  height: auto;
-  margin-top: -50px;
+  height: 50px;
+  border: 3px solid rgba(195, 195, 195, 0.6);
+  border-radius: 50%;
+  border-top-color: #636767;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+  @keyframes spin {
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes spin {
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
 `;

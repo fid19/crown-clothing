@@ -5,11 +5,11 @@ import Category from "../category/category.component";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import {
-  addCollectionAndDocuments,
-  getCategoriesAndDocuments,
-} from "../../utils/firebase/firebase.utils.js";
-import { setCategories } from "../../store/categories/category.action";
+// import {
+//   addCollectionAndDocuments,
+//   getCategoriesAndDocuments,
+// } from "../../utils/firebase/firebase.utils.js";
+import { fetchCategoriesStart } from "../../store/categories/category.action";
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -17,9 +17,8 @@ const Shop = () => {
   useEffect(() => {
     // addCollectionAndDocuments("categories", SHOP_DATA);
     const getCategoriesMap = async () => {
-      const categoriesArray = await getCategoriesAndDocuments();
       // console.log(categoriesArray);
-      dispatch(setCategories(categoriesArray));
+      dispatch(fetchCategoriesStart());
     };
 
     getCategoriesMap();

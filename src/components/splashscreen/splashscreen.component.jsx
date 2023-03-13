@@ -1,13 +1,12 @@
 import React from "react";
-import splash from "../../assets/27Rnd.gif";
-import { Splash, SplashImage } from "./splashscreen.styles";
+import { SpinnerContainer, SpinnerOverlay } from "./splashscreen.styles";
 
 export const SplashScreen = () => {
   return (
     <>
-      <Splash>
-        <SplashImage src={splash} />
-      </Splash>
+      <SpinnerOverlay>
+        <SpinnerContainer></SpinnerContainer>
+      </SpinnerOverlay>
     </>
   );
 };

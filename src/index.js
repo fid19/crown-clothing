@@ -12,6 +12,8 @@ import { store, persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { SplashScreen } from "./components/splashscreen/splashscreen.component";
 
+import { Elements } from "@stripe/react-stripe-js";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -24,7 +26,9 @@ root.render(
         <BrowserRouter>
           {/* <CategoriesProvider> */}
           {/* <ShoppingProvider> */}
-          <App />
+          <Elements>
+            <App />
+          </Elements>
           {/* </ShoppingProvider> */}
           {/* </CategoriesProvider> */}
         </BrowserRouter>

@@ -13,6 +13,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { SplashScreen } from "./components/splashscreen/splashscreen.component";
 
 import { Elements } from "@stripe/react-stripe-js";
+import { stripePromise } from "./utils/stripe/stripe.utils";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -26,7 +27,7 @@ root.render(
         <BrowserRouter>
           {/* <CategoriesProvider> */}
           {/* <ShoppingProvider> */}
-          <Elements>
+          <Elements stripe={stripePromise}>
             <App />
           </Elements>
           {/* </ShoppingProvider> */}

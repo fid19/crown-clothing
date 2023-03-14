@@ -13,6 +13,7 @@ import {
   selectCartTotal,
 } from "../../store/cart/cart.selector";
 import { setIsCartOpen } from "../../store/cart/cart.action";
+import PaymentForm from "../payment-form/payment-form.component";
 
 export const CheckoutPage = () => {
   // const { cartItems, setShoppingBag, totalPrice } = useContext(ShoppingContext);
@@ -49,6 +50,7 @@ export const CheckoutPage = () => {
         <CheckoutItem key={cart.id} cartItem={cart} />
       ))}
       <Total>Total: ${cartTotal}</Total>
+      <PaymentForm />
     </CheckoutContainer>
   );
 };

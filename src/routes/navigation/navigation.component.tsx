@@ -7,7 +7,7 @@ import {
   NavLink,
   NavLinks,
   LogoContainer,
-} from "./navigation.styles.jsx";
+} from "./navigation.styles";
 // import { signOutUser } from "../../utils/firebase/firebase.utils";
 // import { UserContext } from "../../contexts/user.contexts";
 import CartIcon from "../../components/cart-icon/cart-icon.component";

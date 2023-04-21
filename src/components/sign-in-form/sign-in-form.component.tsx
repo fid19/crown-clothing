@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import { getRedirectResult } from "firebase/auth";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import {
@@ -16,6 +16,7 @@ import {
   emailSignInStart,
   googleSignInStart,
 } from "../../store/user/user.action";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 
 const defaultSignInForm = {
   email: "",
@@ -43,7 +44,7 @@ const SignInForm = () => {
   //   check();
   // }, []);
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setSignInForm({ ...signInForm, [name]: value });
   };
@@ -53,7 +54,7 @@ const SignInForm = () => {
     dispatch(googleSignInStart());
   };
 
-  const onSubmitForm = async (event) => {
+  const onSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!email || !password) {
@@ -67,9 +68,9 @@ const SignInForm = () => {
       dispatch(emailSignInStart(email, password));
 
       resetFormFields();
-    } catch (err) {
+    } catch (err: any) {
       switch (err.code) {
-        case "auth/user-not-found":
+        case AuthErrorCodes.USER_DELETED:
           alert("Username does not exist");
           break;
         case "auth/wrong-password":

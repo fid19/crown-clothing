@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { CartItemContainer, ItemDetails, Name } from "./cart-item.styles";
 
 export const CartItem = ({ cartItem }) => {

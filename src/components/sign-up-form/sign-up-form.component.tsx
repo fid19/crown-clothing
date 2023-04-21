@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FormEvent, ChangeEvent } from "react";
 import { useSelector } from "react-redux";
 import {
   selectCurrentUser,
@@ -11,12 +11,13 @@ import {
 } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
-import { SignUpContainer } from "./sign-up-form.styles.jsx";
+import { SignUpContainer } from "./sign-up-form.styles";
 import { useDispatch } from "react-redux";
 import {
   emailSignInStart,
   emailSignUpStart,
 } from "../../store/user/user.action";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 
 const defaultFormFields = {
   displayName: "",
@@ -25,7 +26,7 @@ const defaultFormFields = {
   confirmPassword: "",
 };
 
-export const alertError = async (err) => {
+export const alertError = async (err: AuthError): Promise<void> => {
   alert(err);
 };
 
@@ -36,7 +37,7 @@ const SignUpForm = () => {
 
   const dispatch = useDispatch();
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
     setFormFields({ ...formFields, [name]: value });
@@ -46,7 +47,7 @@ const SignUpForm = () => {
     setFormFields(defaultFormFields);
   };
 
-  const onSubmitForm = async (event) => {
+  const onSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!email || confirmPassword != password) {

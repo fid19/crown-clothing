@@ -10,8 +10,14 @@ import {
 } from "../../store/categories/category.selector";
 import { SplashScreen } from "../../components/splashscreen/splashscreen.component";
 
+type CategoryRouteParams = {
+  category: string;
+};
+
 const Category = () => {
-  const { category } = useParams();
+  const { category } = useParams<
+    keyof CategoryRouteParams
+  >() as CategoryRouteParams;
   const categoriesMap = useSelector(selectCategoriesMap);
   const isLoading = useSelector(selectCategoriesIsLoading);
 

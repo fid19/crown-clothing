@@ -1,6 +1,6 @@
 import { CheckoutPage } from "../../components/checkout/checkoutpage.component";
 
-export const Checkout = () => {
+const Checkout = () => {
   return (
     <div>
       <hr />
@@ -8,3 +8,5 @@ export const Checkout = () => {
     </div>
   );
 };
+
+export default Checkout;

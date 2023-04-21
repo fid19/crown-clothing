@@ -13,10 +13,19 @@ export const Preview = styled.div`
   grid-template-columns: repeat(3, 1fr);
   column-gap: 20px;
   row-gap: 20px;
+
+  @media screen and (max-width: 800px) {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+  }
 `;
 
 export const CategoryPreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
+
+  @media screen and (max-width: 800px) {
+    align-items: center;
+  }
 `;

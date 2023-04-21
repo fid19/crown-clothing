@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
         onClick={addProductToCart}
       >
         {" "}
-        Add to card
+        Add to cart
       </Button>
     </ProductCardContainer>
   );
